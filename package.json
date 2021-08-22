@@ -1,9 +1,9 @@
 {
-  "name": "sg-scraper",
+  "name": "hdb-rental-analysis",
   "version": "1.0.0",
   "main": "main.js",
-  "repository": "git@github.com:bottleneckco/sg-scraper.git",
-  "author": "Duncan Leo <hello@duncanleo.me>",
+  "repository": "git@github.com:the-weds-meetup/hdb-rental-analysis.git",
+  "author": "Amos Tan <hello@amostan.me>",
   "license": "MIT",
   "scripts": {
     "scrape": "node dist/scraper.js",
@@ -13,7 +13,6 @@
     "start": "ts-node src/server.ts"
   },
   "dependencies": {
-    "@sentry/node": "^5.20.1",
     "@types/geojson": "^7946.0.7",
     "axios": "^0.21.1",
     "bluebird": "^3.7.2",
