@@ -1,8 +1,8 @@
 {
-  "name": "hdb-rental-analysis",
+  "name": "hdb-prices-amenties-scraper",
   "version": "1.0.0",
   "main": "main.js",
-  "repository": "git@github.com:the-weds-meetup/hdb-rental-analysis.git",
+  "repository": "git@github.com:the-weds-meetup/hdb-prices-amenties-scraper.git",
   "author": "Amos Tan <hello@amostan.me>",
   "license": "MIT",
   "scripts": {
