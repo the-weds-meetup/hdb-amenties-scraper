@@ -1,22 +1,12 @@
 import 'ts-polyfill/lib/es2019-array';
 
-import { readStore, writeStore } from './output';
+import { writeCSVStore } from './output';
 import hawkers from './sources/hawker';
-
-import fs from 'fs';
-
-try {
-  fs.mkdirSync('traces');
-} catch (e) {}
 
 async function hawker() {
   try {
     const data = await hawkers();
-
-    const store = readStore('hawker.json');
-    writeStore('hawker.json', {
-      hawker: data,
-    });
+    await writeCSVStore('hawker.csv', 'raw', data);
   } catch (e) {
     console.log(e);
   }

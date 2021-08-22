@@ -177,4 +177,6 @@ public/
 
 dist/
 output/*.json
+output/*.csv
+output/*/*.csv
 traces

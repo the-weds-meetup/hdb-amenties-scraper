@@ -1,17 +1,8 @@
 export interface Hawker {
-  title: string;
+  name: string;
   address: string;
-  status: string;
-  hawkerClosure?: {
-    closeStartDate?: number;
-    closeEndDate?: number;
-    closeReason?: string;
-  }[];
-  imageUrl: string;
-  location: {
-    type: string;
-    coordinates: string[];
-  };
+  longitude: string;
+  latitude: string;
 }
 
 export interface HawkerRaw {
