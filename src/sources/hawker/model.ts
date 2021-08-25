@@ -1,6 +1,8 @@
 export interface Hawker {
+  id: string;
   name: string;
   address: string;
+  postalCode: string;
   longitude: string;
   latitude: string;
 }
