@@ -1,11 +1,11 @@
 export interface CSVRaw {
   [key: string]: string;
-  'No.': string;
-  Name: string;
-  Location: string;
-  'Postal Code': string;
-  Longitude: string;
-  Latitude: string;
+  ID: string;
+  NAME: string;
+  ADDRESS: string;
+  POSTAL_CODE: string;
+  LONGITUDE: string;
+  LATITUDE: string;
 }
 
 export interface CSV {

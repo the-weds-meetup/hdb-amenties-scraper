@@ -18,26 +18,25 @@ const CSV_HEADER = [
 export default async function csvProcessing(
   data: CSVRaw[]
 ): Promise<CSVProcessed> {
-  const processedData = [];
+  const results = [];
 
   for await (const tempData of data) {
-    const postal = tempData['Postal Code'];
+    const postal = tempData['POSTAL_CODE'];
     const coords = await autoLocation<{ address: string }>({ address: postal });
 
     if (!coords?.location) {
-      console.log(`(${postal}) ${tempData['Name']} is invalid`);
-      continue;
+      console.log(`(${postal}) ${tempData['NAME']} is invalid`);
     }
 
-    processedData.push({
-      id: tempData['No.'],
-      name: tempData['Name'],
-      address: tempData['Location'],
+    results.push({
+      id: tempData['ID'],
+      name: tempData['NAME'],
+      address: tempData['LOCATION'],
       postalCode: postal,
-      longitude: coords?.location.coordinates[0],
-      latitude: coords?.location.coordinates[1],
+      longitude: coords?.location?.coordinates[0] || '',
+      latitude: coords?.location?.coordinates[1] || '',
     });
   }
 
-  return { header: CSV_HEADER, data: processedData };
+  return { header: CSV_HEADER, data: results };
 }
