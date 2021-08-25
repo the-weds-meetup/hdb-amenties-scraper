@@ -1,8 +1,11 @@
 import * as csvWriterFactory from 'csv-writer';
+import * as csvParser from 'csv-parser';
 import fs from 'fs';
 import path from 'path';
+import { CSVRaw } from './sources/basicCSV/model';
 
-const DIRECTORY_DIST = path.join(process.cwd(), 'output');
+const DIRECTORY_OUTPUT = path.join(process.cwd(), 'temp', 'output');
+const DIRECTORY_INPUT = path.join(process.cwd(), 'temp', 'input');
 
 interface CSVHeader {
   id: string;
@@ -15,35 +18,34 @@ interface CSVResponse<TResponse> {
 }
 
 try {
-  fs.mkdirSync(DIRECTORY_DIST);
+  fs.mkdirSync(DIRECTORY_OUTPUT);
 } catch (e) {}
 
-export function readStore(fileName: string): Record<string, unknown> {
-  const filePath = path.join(DIRECTORY_DIST, fileName);
+export async function readStore(fileName: string): Promise<CSVRaw[]> {
+  const filePath = path.join(DIRECTORY_INPUT, fileName);
   if (!fs.existsSync(filePath)) {
-    return {};
+    return [];
   }
-  const data = fs.readFileSync(filePath, {
-    encoding: 'utf-8',
+
+  const data = [];
+
+  return new Promise(function (resolve, reject) {
+    fs.createReadStream(filePath)
+      .pipe(csvParser.default())
+      .on('error', (error) => reject(error))
+      .on('data', (row) => data.push(row))
+      .on('end', () => {
+        resolve(data);
+      });
   });
-
-  return JSON.parse(data) as Record<string, unknown>;
 }
 
-export function writeStore(
-  fileName: string,
-  data: Record<string, unknown>
-): void {
-  const filePath = path.join(DIRECTORY_DIST, fileName);
-  fs.writeFileSync(filePath, JSON.stringify(data));
-}
-
-export async function writeCSVStore<TResponse>(
+export async function writeStore<TResponse>(
   fileName: string,
   type: 'raw' | 'processed',
   data: CSVResponse<TResponse>
 ): Promise<void> {
-  const tempPath = path.join(DIRECTORY_DIST, type);
+  const tempPath = path.join(DIRECTORY_OUTPUT, type);
   const filePath = path.join(tempPath, fileName);
 
   try {

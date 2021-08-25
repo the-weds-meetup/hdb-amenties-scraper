@@ -1,13 +1,18 @@
 import lookupLocation from '../location/lookup';
 import postalCode from './postalCode';
 
+interface Location {
+  type: string;
+  coordinates: number[];
+}
+
 /**
  * Helper function to automatically set a place's address
  * to its OneMap lookup address
  */
 export default async function autoLocation<T>(
   obj: T & { address: string }
-): Promise<T> {
+): Promise<T & { address: string; location: Location | null }> {
   const addressLookup = await lookupLocation(
     postalCode(obj.address) || obj.address
   );
