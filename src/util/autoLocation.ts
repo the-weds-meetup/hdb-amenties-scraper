@@ -3,6 +3,7 @@ import postalCode from './postalCode';
 
 interface Location {
   type: string;
+  postal: string;
   coordinates: number[];
 }
 
@@ -21,6 +22,7 @@ export default async function autoLocation<T>(
       addressLookup?.results?.length !== 0
         ? {
             type: 'Point',
+            postal: addressLookup.results[0].POSTAL,
             coordinates: [
               parseFloat(addressLookup.results[0].LONGTITUDE),
               parseFloat(addressLookup.results[0].LATITUDE),

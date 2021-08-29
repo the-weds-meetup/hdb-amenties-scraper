@@ -2,7 +2,6 @@ import * as csvWriterFactory from 'csv-writer';
 import * as csvParser from 'csv-parser';
 import fs from 'fs';
 import path from 'path';
-import { CSVRaw } from './sources/basicCSV/model';
 
 const DIRECTORY_OUTPUT = path.join(process.cwd(), 'temp', 'output');
 const DIRECTORY_INPUT = path.join(process.cwd(), 'temp', 'input');
@@ -21,7 +20,7 @@ try {
   fs.mkdirSync(DIRECTORY_OUTPUT);
 } catch (e) {}
 
-export async function readStore(fileName: string): Promise<CSVRaw[]> {
+export async function readStore<RAWCSV>(fileName: string): Promise<RAWCSV[]> {
   const filePath = path.join(DIRECTORY_INPUT, fileName);
   if (!fs.existsSync(filePath)) {
     return [];

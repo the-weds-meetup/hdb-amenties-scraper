@@ -14,6 +14,7 @@ export interface Result {
   SEARCHVAL: string;
   X: string;
   Y: string;
+  POSTAL: string;
   LATITUDE: string;
   LONGITUDE: string;
   LONGTITUDE: string;
@@ -26,7 +27,7 @@ export default async function search(term: string): Promise<Response> {
   const query = {
     searchVal: term,
     returnGeom: 'Y',
-    getAddrDetails: 'N',
+    getAddrDetails: 'Y',
     pageNum: '1',
   };
   const response = await axios.get(

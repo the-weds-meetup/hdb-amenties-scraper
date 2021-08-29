@@ -2,7 +2,10 @@ import 'ts-polyfill/lib/es2019-array';
 
 import { writeStore, readStore } from './output';
 import hawkers from './sources/hawker';
+import hdb from './sources/hdb';
 import basicCSV from './sources/basicCSV';
+import { HDBModifiedRaw } from './sources/hdb/model';
+import { CSVRaw } from './sources/basicCSV/model';
 
 async function hawker() {
   try {
@@ -15,7 +18,7 @@ async function hawker() {
 
 async function postalCodes(fileName: string) {
   try {
-    const rawData = await readStore(fileName);
+    const rawData = await readStore<CSVRaw>(fileName);
 
     const data = await basicCSV(rawData);
     console.log(`Received ${data.data.length} results from ${fileName}`);
@@ -26,6 +29,17 @@ async function postalCodes(fileName: string) {
   }
 }
 
+async function getHdb() {
+  try {
+    const rawData = await readStore<HDBModifiedRaw>(
+      'Resale_Price_Modified.csv'
+    );
+    const data = await hdb(rawData);
+    await writeStore('hdb_modified_address.csv', 'raw', data);
+  } catch (e) {
+    console.log(e);
+  }
+}
 async function scraper() {
   await hawker();
   await postalCodes('malls.csv');
