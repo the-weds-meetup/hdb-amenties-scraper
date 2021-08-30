@@ -42,8 +42,8 @@ async function getHdb() {
 }
 
 async function scraper() {
-  // await hawker();
-  // await getHdb();
+  await hawker();
+  await getHdb();
   await postalCodes('malls.csv');
   await postalCodes('polyclinics.csv');
   await postalCodes('primary_school.csv');
