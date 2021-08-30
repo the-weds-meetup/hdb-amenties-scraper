@@ -20,8 +20,14 @@ try {
   fs.mkdirSync(DIRECTORY_OUTPUT);
 } catch (e) {}
 
-export async function readStore<RAWCSV>(fileName: string): Promise<RAWCSV[]> {
-  const filePath = path.join(DIRECTORY_INPUT, fileName);
+export async function readStore<RAWCSV>(
+  fileName: string,
+  isProcessed = false
+): Promise<RAWCSV[]> {
+  const filePath = path.join(
+    isProcessed ? DIRECTORY_OUTPUT + '/raw' : DIRECTORY_INPUT,
+    fileName
+  );
   if (!fs.existsSync(filePath)) {
     return [];
   }

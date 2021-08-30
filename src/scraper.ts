@@ -2,7 +2,7 @@ import 'ts-polyfill/lib/es2019-array';
 
 import { writeStore, readStore } from './output';
 import hawkers from './sources/hawker';
-import hdb from './sources/hdb';
+import { processedPostalCode } from './sources/hdb';
 import basicCSV from './sources/basicCSV';
 import { HDBModifiedRaw } from './sources/hdb/model';
 import { CSVRaw } from './sources/basicCSV/model';
@@ -34,14 +34,16 @@ async function getHdb() {
     const rawData = await readStore<HDBModifiedRaw>(
       'Resale_Price_Modified.csv'
     );
-    const data = await hdb(rawData);
+    const data = await processedPostalCode(rawData);
     await writeStore('hdb_modified_address.csv', 'raw', data);
   } catch (e) {
     console.log(e);
   }
 }
+
 async function scraper() {
-  await hawker();
+  // await hawker();
+  // await getHdb();
   await postalCodes('malls.csv');
   await postalCodes('polyclinics.csv');
   await postalCodes('primary_school.csv');

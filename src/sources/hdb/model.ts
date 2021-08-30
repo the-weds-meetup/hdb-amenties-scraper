@@ -14,3 +14,24 @@ export interface HDBModifiedRaw {
 }
 
 export type HDB = CSV;
+
+export interface HDBComparision extends CSV {
+  nearestHawkerName: string;
+  nearestHawkerAddress: string;
+  nearestHawkerDistance: string;
+  nearestTransportName: string;
+  nearestTransportAddress: string;
+  nearestTransportDistance: string;
+  nearestMallName: string;
+  nearestMallAddress: string;
+  nearestMallDistance: string;
+  nearestPolyclinicName: string;
+  nearestPolyclinicAddress: string;
+  nearestPolyclinicDistance: string;
+  nearestSchoolName: string;
+  nearestSchoolAddress: string;
+  nearestSchoolDistance: string;
+  nearestSportsName: string;
+  nearestSportsAddress: string;
+  nearestSportsDistance: string;
+}
