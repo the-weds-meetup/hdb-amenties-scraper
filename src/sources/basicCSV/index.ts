@@ -31,7 +31,7 @@ export default async function csvProcessing(
     results.push({
       id: tempData['ID'],
       name: tempData['NAME'],
-      address: tempData['LOCATION'],
+      address: tempData['ADDRESS'],
       postalCode: postal,
       longitude: coords?.location?.coordinates[0] || '',
       latitude: coords?.location?.coordinates[1] || '',
