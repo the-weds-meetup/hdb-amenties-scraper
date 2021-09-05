@@ -19,6 +19,7 @@ interface Props {
 }
 
 const loggingKey = '[HDB SHORTEST]';
+const RAFFLES_PLACE_MRT = { longitude: 103.8514617, latitude: 1.28412561 };
 const CSV_HEADER = [
   { id: 'id', title: 'ID' },
   { id: 'name', title: 'NAME' },
@@ -50,6 +51,8 @@ const CSV_HEADER = [
   { id: 'nearestSportsName', title: 'SPORTS_NAME' },
   { id: 'nearestSportsAddress', title: 'SPORTS_ADDRESS' },
   { id: 'nearestSportsDistance', title: 'SPORTS_DISTANCE' },
+
+  { id: 'distanceFromCBD', title: 'CBD_DISTANCE_METERS' },
 ];
 
 function getShortestDistance(hdb: CSVRaw, amenities: CSVRaw[]) {
@@ -85,10 +88,21 @@ function getShortestDistance(hdb: CSVRaw, amenities: CSVRaw[]) {
   };
 }
 
+function getCBDDistance(hdb: CSVRaw) {
+  const distance = getDistance(
+    {
+      latitude: hdb['LATITUDE'],
+      longitude: hdb['LONGITUDE'],
+    },
+    RAFFLES_PLACE_MRT
+  );
+  return distance;
+}
+
 export default function hdbProcessing(data: Props): HDBProcessed {
   const { hdb, hawker, transport, malls, polyclinics, primarySchool, sports } =
     data;
-  const results = [];
+  const results: HDBComparision[] = [];
   console.time(loggingKey);
 
   for (const currentHDB of hdb) {
@@ -101,6 +115,8 @@ export default function hdbProcessing(data: Props): HDBProcessed {
       primarySchool
     );
     const shortestSports = getShortestDistance(currentHDB, sports);
+
+    const cbdDistance = getCBDDistance(currentHDB);
 
     results.push({
       id: currentHDB['ID'],
@@ -133,6 +149,7 @@ export default function hdbProcessing(data: Props): HDBProcessed {
       nearestSportsName: `${shortestSports.name}`,
       nearestSportsAddress: `${shortestSports.address}`,
       nearestSportsDistance: `${shortestSports.distance}`,
+      distanceFromCBD: `${cbdDistance}`,
     });
   }
   console.timeEnd(loggingKey);

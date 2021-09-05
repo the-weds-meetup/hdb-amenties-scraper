@@ -16,6 +16,7 @@ export interface HDBModifiedRaw {
 export type HDB = CSV;
 
 export interface HDBComparision extends CSV {
+  distanceFromCBD: string;
   nearestHawkerName: string;
   nearestHawkerAddress: string;
   nearestHawkerDistance: string;
